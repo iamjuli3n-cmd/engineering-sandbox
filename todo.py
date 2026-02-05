@@ -39,7 +39,7 @@ tasks = [
 running = True
 while running:
     print("What do you want to do?\n")
-    choix = input("Add / Show / Quit")
+    choix = input("Add / Show / Modify / Quit")
 
     if choix == "Add":
         titre = input("quel est cette tache ? ")
@@ -69,6 +69,48 @@ while running:
             print(f"   Deadline : {task['deadline']}")
             print(f"   Rappel : {task['rappel']} minutes")
             i += 1
+
+    elif choix == "Modify":
+        i = 1
+        while i <= len(tasks):
+            print(f"{i}. {tasks[i - 1]['title']}")
+            i += 1
+
+        index = int(input("Numéro de la task à modifier : ")) - 1
+
+        if 0 <= index < len(tasks):
+            task = tasks[index]
+
+            print("\nQue veux-tu modifier ?")
+            print("1. Titre")
+            print("2. Terminé")
+            print("3. Date de création")
+            print("4. Deadline")
+            print("5. Rappel")
+
+            choix_modif = input("Choix : ")
+
+            if choix_modif == "1":
+                task["title"] = input("Nouveau titre : ")
+
+            elif choix_modif == "2":
+                rep = input("Terminé ? (y/n) : ")
+                task["done"] = rep == "y"
+
+            elif choix_modif == "3":
+                task["date_creation"] = input("Nouvelle date de création : ")
+
+            elif choix_modif == "4":
+                task["deadline"] = input("Nouvelle deadline : ")
+
+            elif choix_modif == "5":
+                task["rappel"] = int(input("Nouveau rappel (minutes) : "))
+
+            else:
+                print("Choix invalide.")
+
+        else:
+            print("Task inexistante.")
 
     elif choix == "Quit":
         running = False
